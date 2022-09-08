@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import org.thymeleaf.util.StringUtils;
 
@@ -93,5 +91,26 @@ public class LoginController {
         }
         response.addCookie(new Cookie("token", token));
         return "redirect:/index";
+    }
+
+    @GetMapping("/login")
+    public String toLogin(){
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response,
+                         Model model){
+        Admins admin = commonUtils.getUserFromSession(request);
+        if(admin == null){
+            model.addAttribute("error", "用户未登录!");
+            return "redirect:/login";
+        }
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/login";
     }
 }

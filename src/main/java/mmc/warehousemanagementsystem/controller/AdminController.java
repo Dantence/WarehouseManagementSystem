@@ -30,7 +30,7 @@ public class AdminController {
             model.addAttribute("error", "用户未登录!");
             return "redirect:/login";
         }
-        if(admin.getManageWarehouse().equals(warehouseId)){
+        if(admin.getManageWarehouse() != null && admin.getManageWarehouse().equals(warehouseId)){
             model.addFlashAttribute("error", "您已经是该仓库的管理员了!");
             return "redirect:/index";
         }
