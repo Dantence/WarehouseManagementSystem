@@ -58,7 +58,7 @@
                     <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h5 class="modal-title" id="myModallabel3">进货</h5>
                 </div>
-                <form action="/stock" method="post" class="form-horizontal">
+                <form action="/stock" method="post" class="form-horizontal" enctype="multipart/form-data">
                     <div class="modal-body">
 
                         <div class="form-group">
@@ -77,6 +77,12 @@
                             <label class="control-label col-lg-3">货物单价：</label>
                             <div class="col-lg-9">
                                 <input type="text" value="" name="price" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">货物图片：</label>
+                            <div class="col-lg-9">
+                                <input type="file" value="" name="img" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">

@@ -35,6 +35,7 @@
       <table class="table">
         <tr class="table-head">
           <th>货物名称</th>
+          <th>货物图片</th>
           <th>数量</th>
           <th>所属仓库</th>
           <th>最后修改时间</th>
@@ -42,6 +43,10 @@
 
         <tr class="table-body" th:each="material : ${allMaterials}">
           <td th:text="${material.name}"></td>
+          <td>
+            <img th:if=" ${material.img != null && material.img != ''}" th:src="'/uploadFile/' + ${material.img}" width="20%"/>
+            <img th:if=" ${material.img == null || material.img == ''}" src="/uploadFile/default.png" width="20%"/>
+          </td>
           <td th:text="${material.quantity}"></td>
           <td th:text="${material.warehouse}"></td>
           <td th:text="${#dates.format(material.gmtModified, 'yyyy-MM-dd HH:mm')}"></td>
