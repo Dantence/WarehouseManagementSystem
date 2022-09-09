@@ -85,7 +85,7 @@ public class MaterialController {
             model.addFlashAttribute("error", "进货数量过多，仓库无法容纳!");
             return "redirect:/index";
         }
-        if(!admin.getManageWarehouse().equals(warehouseId)){
+        if(admin.getManageWarehouse() == null || !admin.getManageWarehouse().equals(warehouseId)){
             model.addFlashAttribute("error", "您不是该仓库的管理员!");
             return "redirect:/index";
         }
@@ -135,11 +135,13 @@ public class MaterialController {
         order.setQuantity(quantity);
         order.setType(1);
         if(res.size() > 0){
-            order.setMaterialId(res.get(0).getId());
+            order.setMaterialName(res.get(0).getName());
+            order.setSum(quantity * res.get(0).getPrice());
         } else {
             materialExample = new MaterialExample();
             materialExample.createCriteria().andNameEqualTo(name);
-            order.setMaterialId(materialMapper.selectByExample(materialExample).get(0).getId());
+            order.setMaterialName(materialMapper.selectByExample(materialExample).get(0).getName());
+            order.setSum(materialMapper.selectByExample(materialExample).get(0).getPrice() * quantity);
         }
         order.setAdminId(admin.getId());
         order.setGmtCreated(System.currentTimeMillis());
@@ -185,7 +187,7 @@ public class MaterialController {
             model.addFlashAttribute("error", "出货数量过多!");
             return "redirect:/index";
         }
-        if(!admin.getManageWarehouse().equals(warehouseId)){
+        if(admin.getManageWarehouse() == null || !admin.getManageWarehouse().equals(warehouseId)){
             model.addFlashAttribute("error", "您不是该仓库的管理员!");
             return "redirect:/index";
         }
@@ -218,9 +220,10 @@ public class MaterialController {
         Order order = new Order();
         order.setQuantity(quantity);
         order.setType(0);
-        order.setMaterialId(res.get(0).getId());
+        order.setMaterialName(res.get(0).getName());
         order.setAdminId(admin.getId());
         order.setGmtCreated(System.currentTimeMillis());
+        order.setSum(quantity * res.get(0).getPrice());
         orderMapper.insert(order);
         return "redirect:/index";
     }

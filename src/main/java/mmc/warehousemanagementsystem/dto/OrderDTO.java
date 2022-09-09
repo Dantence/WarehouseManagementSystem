@@ -12,7 +12,7 @@ public class OrderDTO {
     private String materialName;
     private String adminName;
     private Integer quantity;
-    private Integer price;
+    private Integer sum;
     private String typeName;
     private Long gmtCreated;
 }

@@ -49,12 +49,11 @@ public class OrderController {
         for(Order bill : bills){
             OrderDTO orderDTO = new OrderDTO();
             Admins user = adminsMapper.selectByPrimaryKey(bill.getAdminId());
-            Material material = materialMapper.selectByPrimaryKey(bill.getMaterialId());
             orderDTO.setAdminName(user.getName());
-            orderDTO.setMaterialName(material.getName());
+            orderDTO.setMaterialName(bill.getMaterialName());
             orderDTO.setId(bill.getId());
             orderDTO.setQuantity(bill.getQuantity());
-            orderDTO.setPrice(material.getPrice());
+            orderDTO.setSum(bill.getSum());
             orderDTO.setGmtCreated(bill.getGmtCreated());
             if(bill.getType() == 1){
                 orderDTO.setTypeName("进货");
